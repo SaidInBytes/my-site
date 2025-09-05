@@ -50,13 +50,13 @@ const ProjectCarousel: React.FC = () => {
   const [active, setActive] = useState<number | null>(null);
 
   return (
-    <section className="py-12">
+  <section className="py-12 bg-gradient-to-br from-black via-gray-900 to-purple-900 min-h-[60vh] flex flex-col items-center justify-center animate-fade-in">
       <h2 className="text-2xl font-bold text-center mb-8">Mina projekt</h2>
       <div className="flex overflow-x-auto gap-6 px-4">
         {projects.map((project, idx) => (
           <div
             key={project.title}
-            className="min-w-[250px] bg-white rounded-lg shadow-lg p-4 cursor-pointer hover:scale-105 transition-transform"
+            className="min-w-[250px] bg-white/10 backdrop-blur-lg rounded-xl shadow-2xl p-4 border border-white/20 cursor-pointer hover:scale-105 transition-transform animate-fade-in"
             onClick={() => setActive(idx)}
           >
             <h3 className="text-lg font-semibold mb-2">{project.title}</h3>
@@ -67,8 +67,14 @@ const ProjectCarousel: React.FC = () => {
 
       
       {active !== null && (
-        <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-8 max-w-md w-full relative">
+        <div
+          className="fixed inset-0 bg-gradient-to-br from-black via-gray-900 to-purple-900 bg-opacity-30 flex items-center justify-center z-50"
+          onClick={() => setActive(null)}
+        >
+          <div
+            className="bg-white/10 backdrop-blur-lg rounded-xl shadow-2xl p-8 max-w-md w-full relative border border-white/20 animate-fade-in"
+            onClick={e => e.stopPropagation()}
+          >
             <button
               className="absolute top-2 right-2 text-gray-500 text-2xl"
               onClick={() => setActive(null)}
@@ -89,6 +95,15 @@ const ProjectCarousel: React.FC = () => {
           </div>
         </div>
       )}
+    <style jsx>{`
+      .animate-fade-in {
+        animation: fadeIn 1.2s ease;
+      }
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(30px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+    `}</style>
     </section>
   );
 };
